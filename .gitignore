@@ -6,3 +6,4 @@ pkg/*
 runner.rb
 .yardoc/*
 doc/*
+Gemfile.lock
