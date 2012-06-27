@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency('awesome_print')
   s.add_development_dependency('yard')
   s.add_development_dependency('bluecloth')
+  s.add_development_dependency('gemfury')
 
   s.add_runtime_dependency('httpi', '0.7.9')
   s.add_runtime_dependency('savon', '>= 0.8.6')
