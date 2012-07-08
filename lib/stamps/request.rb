@@ -14,6 +14,9 @@ module Stamps
         wsdl.namespace = self.namespace
       end
 
+      client.http.open_timeout = self.open_timeout if self.open_timeout
+      client.http.read_timeout = self.read_timeout if self.read_timeout
+
       response = client.request :tns, web_method do
         http.headers = { "SoapAction" => formatted_soap_action(web_method) }
         soap.namespace = 'tns'

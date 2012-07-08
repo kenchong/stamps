@@ -13,7 +13,9 @@ module Stamps
       :test_mode,
       :raise_errors,
       :log_messages,
-      :endpoint].freeze
+      :endpoint,
+      :open_timeout,
+      :read_timeout].freeze
 
     # The endpoint that will be used to connect if none is set
     DEFAULT_ENDPOINT = 'https://swsim.stamps.com/swsim/swsimv12.asmx'.freeze
@@ -32,6 +34,9 @@ module Stamps
 
     # Do not log requests and response by default
     DEFAULT_LOG_MESSAGES = false
+
+    DEFAULT_OPEN_TIMEOUT = nil
+    DEFAULT_READ_TIMEOUT = nil
 
     # @private
     attr_accessor *VALID_OPTIONS_KEYS
@@ -64,6 +69,8 @@ module Stamps
       self.format       = DEFAULT_FORMAT
       self.log_messages = DEFAULT_LOG_MESSAGES
       self.raise_errors = DEFAULT_RAISE_ERRORS
+      self.open_timeout = DEFAULT_OPEN_TIMEOUT
+      self.read_timeout = DEFAULT_READ_TIMEOUT
     end
   end
 end
