@@ -39,14 +39,15 @@ module Stamps
     # Make Authentication request for the user
     #
     def get_authenticator_token
-      self.request('AuthenticateUser',
+      response = self.request('AuthenticateUser',
         Stamps::Mapping::AuthenticateUser.new(
           :credentials => {
             :integration_id => self.integration_id,
             :username       => self.username,
             :password       => self.password
         })
-      )[:authenticate_user_response][:authenticator]
+      )
+      update_authenticator(response, :authenticate_user_response)
     end
 
     # Concatenates namespace and web method in a way the API can understand
@@ -54,5 +55,12 @@ module Stamps
       [self.namespace, web_method.to_s].compact.join('/')
     end
 
+    def update_authenticator(response, web_method_response)
+      if response.valid?
+        @authenticator = response[web_method_response.to_sym][:authenticator]
+      else
+        @authenticator = nil
+      end
+    end
   end
 end

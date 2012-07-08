@@ -7,6 +7,7 @@ module Stamps
       def clean_address(params = {})
         params[:authenticator] = authenticator_token
         response = request('CleanseAddress', Stamps::Mapping::CleanseAddress.new(params))
+        update_authenticator(response, :cleanse_address_response)
         response[:errors].empty? ? response[:cleanse_address_response] : response
       end
 

@@ -25,6 +25,7 @@ module Stamps
           :rate          => Stamps::Mapping::Rate.new(params)
         })
         response = request('GetRates', rates)
+        update_authenticator(response, :get_rates_response)
         response[:get_rates_response].nil? ? response : [response[:get_rates_response][:rates][:rate]].flatten
       end
 
