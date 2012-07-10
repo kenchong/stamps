@@ -38,6 +38,8 @@ module Stamps
     DEFAULT_OPEN_TIMEOUT = nil
     DEFAULT_READ_TIMEOUT = nil
 
+    TEST_ENDPOINT = 'https://swsim.testing.stamps.com/swsim/swsimv23.asmx'.freeze
+
     # @private
     attr_accessor *VALID_OPTIONS_KEYS
 
