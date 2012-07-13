@@ -1,3 +1,3 @@
 module Stamps
-  VERSION = "0.2.0.copious.6"
+  VERSION = "0.2.0.copious.7"
 end
