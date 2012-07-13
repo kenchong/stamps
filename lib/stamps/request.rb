@@ -17,15 +17,23 @@ module Stamps
       client.http.open_timeout = self.open_timeout if self.open_timeout
       client.http.read_timeout = self.read_timeout if self.read_timeout
 
-      response = client.request :tns, web_method do
-        http.headers = { "SoapAction" => formatted_soap_action(web_method) }
-        soap.namespace = 'tns'
-        soap.element_form_default = :qualified
-        soap.env_namespace = 'soap'
-        soap.namespaces["xmlns:tns"] = self.namespace
-        soap.body = params.to_hash
+      begin
+        response = client.request :tns, web_method do
+          http.headers = { "SoapAction" => formatted_soap_action(web_method) }
+          soap.namespace = 'tns'
+          soap.element_form_default = :qualified
+          soap.env_namespace = 'soap'
+          soap.namespaces["xmlns:tns"] = self.namespace
+          soap.body = params.to_hash
+        end
+        Stamps::Response.new(response).to_hash
+      rescue
+        # if something raises an exception, then we are likely to have not gotten a new authenticator token back from
+        # the server, which means the next time we try to send the cached one, we'll get a conversation out-of-sync
+        # error. instead, just forget the cached one.
+        @authenticator = nil
+        raise
       end
-      Stamps::Response.new(response).to_hash
     end
 
     # Get the Authenticator token. By using an Authenticator, the integration
